@@ -1,0 +1,64 @@
+name: Build and Publish Docker Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      CMAKE_CXX_STANDARD:
+        description: "CMake C++ Standard"
+        required: true
+        default: "17"
+      ROOT_VERSION:
+        description: "ROOT Version"
+        required: true
+        default: "v6-25-01"
+      GEANT4_VERSION:
+        description: "Geant4 Version"
+        required: true
+        default: "v11.0.0"
+
+      target:
+        required: true
+        description: Name of the runner to build the image on
+        default: ubuntu-latest
+
+env:
+  IMAGE_NAME: lobis/root-geant4-garfield
+
+jobs:
+  build-and-push-image:
+    runs-on: ${{ github.event.inputs.target }}
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to the GitHub Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.CONTAINER_REGISTRY_GITHUB_TOKEN }}
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push base Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          build-args: |
+            CMAKE_CXX_STANDARD=${{ github.event.inputs.CMAKE_CXX_STANDARD }}
+            ROOT_VERSION=${{ github.event.inputs.ROOT_VERSION }}
+            GEANT4_VERSION=${{ github.event.inputs.GEANT4_VERSION }}
+          tags: |
+            ${{ env.IMAGE_NAME }}:cxx${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT${{ github.event.inputs.ROOT_VERSION }}_Geant4${{ github.event.inputs.GEANT4_VERSION }}
+            ${{ env.IMAGE_NAME }}:latest
+            ghcr.io/${{ env.IMAGE_NAME }}:cxx${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT${{ github.event.inputs.ROOT_VERSION }}_Geant4${{ github.event.inputs.GEANT4_VERSION }}
+            ghcr.io/${{ env.IMAGE_NAME }}:latest
