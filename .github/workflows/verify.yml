@@ -14,10 +14,11 @@ on:
         default: "latest"
 
 jobs:
-  notify:
+  verify:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/lobis/root-geant4-garfield:latest
+      image: ghcr.io/lobis/root-geant4-garfield:${{ github.event.inputs.tag }}
+
 
     steps:
       - name: Check environment is loaded correctly
