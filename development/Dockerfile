@@ -7,6 +7,8 @@ FROM ghcr.io/lobis/root-geant4-garfieldpp:cxx${CMAKE_CXX_STANDARD}_ROOT${ROOT_VE
 LABEL maintainer.name="Luis Obis"
 LABEL maintainer.email="luis.antonio.obis@gmail.com"
 
+SHELL ["/bin/bash", "-c"]
+
 ARG PASSWORD="password"
 ARG SSH_PUBLIC_KEY=""
 
