@@ -24,8 +24,6 @@ jobs:
         run: |
           echo $LD_LIBRARY_PATH
           echo $ROOTSYS
-          printenv | grep G4
-          printenv
 
       - name: Check ROOT is available in non-interactive shell
         run: |
