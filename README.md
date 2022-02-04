@@ -29,9 +29,9 @@ docker pull ghcr.io/lobis/root-geant4-garfield:cxx17_ROOTv6-25-01_Geant4v11.0.0
 
 ROOT, Geant4 and Garfield expects the user to load the required environment variables via the corresponding initialization scripts (such as `source $ROOTSYS/bin/thisroot.sh`). These lines are usually added to the `.bashrc` file.
 
-In this image to load initialization scripts for ROOT, Geant4 and Garfield it is enough to input `source entry-point.sh`, which will load a script in `/usr/local/bin/entry-point.sh`. This is also appended to the `.bashrc` so that it loads automatically.
+In this image to load initialization scripts for ROOT, Geant4 and Garfield it is enough to input `source docker-entrypoint.sh`, which will load a script in `/usr/local/bin/docker-entrypoint.sh`. This is also appended to the `.bashrc` so that it loads automatically.
 
-However when you are running a non interactive shell you may get an error. This is usually solved by doing `source entry-point.sh` manually.
+However when you are running a non interactive shell you may get an error. This is usually solved by doing `source docker-entrypoint.sh` manually.
 
 
 ## Build
