@@ -22,8 +22,8 @@ jobs:
     steps:
       - name: Print environment variables
         run: |
-          echo $LD_LIBRARY_PATH
-          echo $ROOTSYS
+          echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
+          echo "ROOTSYS: $ROOTSYS"
 
       - name: Check ROOT is available in non-interactive shell
         run: |
