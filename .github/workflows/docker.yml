@@ -77,7 +77,7 @@ jobs:
           context: .
           file: utils/Dockerfile
           push: true
-          pull: false
+          pull: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
             ${{ env.IMAGE_NAME }}:latest
