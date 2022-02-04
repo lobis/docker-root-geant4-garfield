@@ -4,17 +4,21 @@ on:
   workflow_dispatch:
     inputs:
       CMAKE_CXX_STANDARD:
-        description: "CMake C++ Standard"
+        description: "CMake C++ Standard (11, 14, 17, ...)"
         required: true
         default: "17"
       ROOT_VERSION:
-        description: "ROOT Version"
+        description: "ROOT Version (GitHub branch / tag / commit)"
         required: true
         default: "v6-25-01"
       GEANT4_VERSION:
-        description: "Geant4 Version"
+        description: "Geant4 Version (GitHub branch / tag / commit)"
         required: true
         default: "v11.0.0"
+      GARFIELD_VERSION:
+        description: "Garfield Version (GitLab branch / tag / commit)"
+        required: true
+        default: "4.0"
 
       target:
         required: true
@@ -57,10 +61,11 @@ jobs:
             CMAKE_CXX_STANDARD=${{ github.event.inputs.CMAKE_CXX_STANDARD }}
             ROOT_VERSION=${{ github.event.inputs.ROOT_VERSION }}
             GEANT4_VERSION=${{ github.event.inputs.GEANT4_VERSION }}
+            GARFIELD_VERSION=${{ github.event.inputs.GARFIELD_VERSION }}
           tags: |
-            ${{ env.IMAGE_NAME }}:cxx${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT${{ github.event.inputs.ROOT_VERSION }}_Geant4${{ github.event.inputs.GEANT4_VERSION }}
+            ${{ env.IMAGE_NAME }}:cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
             ${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ env.IMAGE_NAME }}:cxx${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT${{ github.event.inputs.ROOT_VERSION }}_Geant4${{ github.event.inputs.GEANT4_VERSION }}
+            ghcr.io/${{ env.IMAGE_NAME }}:cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
 
       - name: Build and Push development Docker image
@@ -74,10 +79,11 @@ jobs:
             CMAKE_CXX_STANDARD=${{ github.event.inputs.CMAKE_CXX_STANDARD }}
             ROOT_VERSION=${{ github.event.inputs.ROOT_VERSION }}
             GEANT4_VERSION=${{ github.event.inputs.GEANT4_VERSION }}
+            GARFIELD_VERSION=${{ github.event.inputs.GARFIELD_VERSION }}
             PASSWORD=${{ secrets.DEVELOPMENT_PASSWORD }}
             SSH_PUBLIC_KEY=${{ secrets.SSH_PUBLIC_KEY }}
           tags: |
-            ${{ env.IMAGE_NAME }}-dev:cxx${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT${{ github.event.inputs.ROOT_VERSION }}_Geant4${{ github.event.inputs.GEANT4_VERSION }}
+            ${{ env.IMAGE_NAME }}-dev:cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
             ${{ env.IMAGE_NAME }}-dev:latest
-            ghcr.io/${{ env.IMAGE_NAME }}-dev:cxx${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT${{ github.event.inputs.ROOT_VERSION }}_Geant4${{ github.event.inputs.GEANT4_VERSION }}
+            ghcr.io/${{ env.IMAGE_NAME }}-dev:cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
             ghcr.io/${{ env.IMAGE_NAME }}-dev:latest

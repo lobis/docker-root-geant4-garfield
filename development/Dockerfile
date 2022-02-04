@@ -1,8 +1,9 @@
 ARG CMAKE_CXX_STANDARD
 ARG ROOT_VERSION
 ARG GEANT4_VERSION
+ARG GARFIELD_VERSION
 
-FROM ghcr.io/lobis/root-geant4-garfield:cxx${CMAKE_CXX_STANDARD}_ROOT${ROOT_VERSION}_Geant4${GEANT4_VERSION}
+FROM ghcr.io/lobis/root-geant4-garfield:cxx${CMAKE_CXX_STANDARD}_ROOT-${ROOT_VERSION}_Geant4-${GEANT4_VERSION}_Garfield-${GARFIELD_VERSION}
 
 LABEL maintainer.name="Luis Obis"
 LABEL maintainer.email="luis.antonio.obis@gmail.com"
