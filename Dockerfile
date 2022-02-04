@@ -10,6 +10,12 @@ ARG ROOT_VERSION=master
 ARG GEANT4_VERSION=master
 ARG GARFIELD_VERSION=master
 
+LABEL org.opencontainers.image.description="ROOT (${ROOT_VERSION}), \
+    Geant4 (${GEANT4_VERSION}) and \
+    Garfield (${GARFIELD_VERSION}) \
+    compiled with C++${CMAKE_CXX_STANDARD}.\
+    "
+
 RUN echo CMAKE_CXX_STANDARD: ${CMAKE_CXX_STANDARD}
 RUN echo ROOT_VERSION: ${ROOT_VERSION}
 RUN echo GEANT4_VERSION: ${GEANT4_VERSION}
@@ -86,10 +92,3 @@ WORKDIR /
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["/bin/bash"]
-
-LABEL org.opencontainers.image.description="ROOT, Geant4 and Garfield \
-    compiled with C++${CMAKE_CXX_STANDARD}, \
-    ROOT version: ${ROOT_VERSION}, \
-    Geant4 version: ${GEANT4_VERSION} and \
-    Garfield version: ${GARFIELD_VERSION}\
-    "
