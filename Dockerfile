@@ -5,15 +5,15 @@ LABEL maintainer.email="luis.antonio.obis@gmail.com"
 
 LABEL org.opencontainers.image.source="https://github.com/lobis/docker-root-geant4-garfield"
 
-ARG CMAKE_CXX_STANDARD
-ARG ROOT_VERSION
-ARG GEANT4_VERSION
-ARG GARFIELDPP_VERSION=4.0
+ARG CMAKE_CXX_STANDARD=17
+ARG ROOT_VERSION=master
+ARG GEANT4_VERSION=master
+ARG GARFIELD_VERSION=master
 
-RUN echo CMAKE_CXX_STANDARD: $CMAKE_CXX_STANDARD
-RUN echo ROOT_VERSION: $ROOT_VERSION
-RUN echo GEANT4_VERSION: $GEANT4_VERSION
-RUN echo GARFIELDPP_VERSION: $GARFIELDPP_VERSION
+RUN echo CMAKE_CXX_STANDARD: ${CMAKE_CXX_STANDARD}
+RUN echo ROOT_VERSION: ${ROOT_VERSION}
+RUN echo GEANT4_VERSION: ${GEANT4_VERSION}
+RUN echo GARFIELD_VERSION: ${GARFIELD_VERSION}
 
 ARG APPS_DIR=/usr/local
 
@@ -56,7 +56,7 @@ ENV LD_LIBRARY_PATH $APPS_DIR/root/install/lib:$LD_LIBRARY_PATH
 ENV PYTHONPATH $APPS_DIR/root/install/lib:$PYTHONPATH
 
 # GARFIELD
-RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git --branch=${GARFIELDPP_VERSION} --depth 1 $APPS_DIR/garfieldpp/source && \
+RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git --branch=${GARFIELD_VERSION} --depth 1 $APPS_DIR/garfieldpp/source && \
     mkdir -p $APPS_DIR/garfieldpp/build &&  cd $APPS_DIR/garfieldpp/build && \
     cmake ../source/ -DCMAKE_INSTALL_PREFIX=$APPS_DIR/garfieldpp/install \
     -DWITH_EXAMPLES=OFF -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD && \
@@ -64,23 +64,23 @@ RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git --branch=${GARFIELD
     rm -rf $APPS_DIR/garfieldpp/build $APPS_DIR/garfieldpp/source
 
 ENV LD_LIBRARY_PATH $APPS_DIR/garfieldpp/install/lib:$LD_LIBRARY_PATH
-# These env variables should be defined by setupGarfield.sh, 'entry-point.sh' does not work in non-interactive shell yet so we define manually
+# These env variables should be defined by setupGarfield.sh, 'docker-entrypoint.sh' does not work in non-interactive shell yet so we define manually
 ENV GARFIELD_INSTALL $APPS_DIR/garfieldpp/install
 ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include
 ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database
 
-RUN echo "#!/bin/bash" >> /entry-point.sh
-RUN echo "source $APPS_DIR/geant4/install/bin/geant4.sh" >> /entry-point.sh
-RUN echo "source $APPS_DIR/root/install/bin/thisroot.sh" >> /entry-point.sh
-RUN echo "source $APPS_DIR/garfieldpp/install/share/Garfield/setupGarfield.sh" >> /entry-point.sh
-RUN echo "export ROOT_INCLUDE_PATH=$APPS_DIR/garfieldpp/install/include" >> /entry-point.sh
-RUN echo "exec \"\$@\"" >> /entry-point.sh
-RUN chmod +x /entry-point.sh
-RUN mv /entry-point.sh /usr/local/bin/entry-point.sh
-RUN echo "source entry-point.sh" >> ~/.bashrc
+RUN echo "#!/bin/bash" >> /docker-entrypoint.sh
+RUN echo "source $APPS_DIR/geant4/install/bin/geant4.sh" >> /docker-entrypoint.sh
+RUN echo "source $APPS_DIR/root/install/bin/thisroot.sh" >> /docker-entrypoint.sh
+RUN echo "source $APPS_DIR/garfieldpp/install/share/Garfield/setupGarfield.sh" >> /docker-entrypoint.sh
+RUN echo "export ROOT_INCLUDE_PATH=$APPS_DIR/garfieldpp/install/include" >> /docker-entrypoint.sh
+RUN echo "exec \"\$@\"" >> /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+RUN mv /docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN echo "source docker-entrypoint.sh" >> ~/.bashrc
 
 WORKDIR /
 
-ENTRYPOINT ["entry-point.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["/bin/bash"]
