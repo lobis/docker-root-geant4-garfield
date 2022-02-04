@@ -20,8 +20,22 @@ jobs:
       image: ghcr.io/lobis/root-geant4-garfield${{ github.event.inputs.tag }}
 
     steps:
-      - name: Check environment is loaded correctly
+      - name: Check ROOT is available in non-interactive shell
         run: |
           root-config --version
-          geant4-config --version
+          root-config --prefix
+          root-config --cflags
 
+      - name: Check Geant4 is available in non-interactive shell
+        run: |
+          geant4-config --version
+          geant4-config --prefix
+          geant4-config --cflags
+
+      - name: Check ROOT
+        run: |
+          root -e 'TTree tree; return 0;' -q
+
+      - name: Check Garfield is available from ROOT prompt
+        run: |
+          root -e '#include "Garfield/MediumMagboltz.hh"; using namespace Garfield; MediumMagboltz gas; return 0;' -q
