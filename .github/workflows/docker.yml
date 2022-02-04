@@ -71,7 +71,7 @@ jobs:
           python3 utils/geant4-dataset-dockerfile.py --image action/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} --output utils/Dockerfile
           cat utils/Dockerfile
 
-      - name: Build and Push base image
+      - name: Build and Push image
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -84,7 +84,7 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
 
-      - name: Build and Push development Docker image
+      - name: Build and Push development image
         uses: docker/build-push-action@v2
         with:
           context: .
