@@ -86,3 +86,9 @@ WORKDIR /
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 CMD ["/bin/bash"]
+
+LABEL org.opencontainers.image.description="ROOT, Geant4 and Garfield compiled with C++${CMAKE_CXX_STANDARD}\
+    ROOT version: ${ROOT_VERSION}\
+    Geant4 version: ${GEANT4_VERSION}\
+    Garfield version: ${GARFIELD_VERSION}\
+    "
