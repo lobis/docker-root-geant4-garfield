@@ -65,9 +65,9 @@ RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git --branch=${GARFIELD
 
 ENV LD_LIBRARY_PATH $APPS_DIR/garfieldpp/install/lib:$LD_LIBRARY_PATH
 # These env variables should be defined by setupGarfield.sh, 'entry-point.sh' does not work in non-interactive shell yet so we define manually
-ENV GARFIELD_INSTALL $APPS_DIR/garfieldpp/install:$GARFIELD_INSTALL
-ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include:$ROOT_INCLUDE_PATH
-ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database:$HEED_DATABASE
+ENV GARFIELD_INSTALL $APPS_DIR/garfieldpp/install
+ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include
+ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database
 
 RUN echo "#!/bin/bash" >> /entry-point.sh
 RUN echo "source $APPS_DIR/geant4/install/bin/geant4.sh" >> /entry-point.sh
