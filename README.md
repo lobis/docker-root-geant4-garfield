@@ -1,7 +1,7 @@
 # Docker Image with ROOT, Geant4 and Garfield++
 
 [![Build and Publish Docker Image](https://github.com/lobis/docker-root-geant4-garfield/actions/workflows/docker.yml/badge.svg)](https://github.com/lobis/docker-root-geant4-garfield/actions/workflows/docker.yml)
-[![Verify Docker Image](https://github.com/lobis/docker-root-geant4-garfield/actions/workflows/verify.yml/badge.svg)](https://github.com/lobis/docker-root-geant4-garfield/actions/workflows/verify.yml)
+[![Verify Docker Image](https://github.com/lobis/docker-root-geant4-garfield/actions/workflows/test.yml/badge.svg)](https://github.com/lobis/docker-root-geant4-garfield/actions/workflows/test.yml)
 
 
 This image has ROOT, Geant4 and Garfield++ installed. This repository hosts the Dockerfile as well as the Docker image as a GitHub Package.
