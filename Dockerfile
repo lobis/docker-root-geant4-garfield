@@ -76,10 +76,9 @@ ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database
 
 # Entrypoint
 RUN echo "#!/bin/bash" >> /docker-entrypoint.sh
-RUN echo "source $APPS_DIR/geant4/install/bin/geant4.sh" >> /docker-entrypoint.sh
 RUN echo "source $APPS_DIR/root/install/bin/thisroot.sh" >> /docker-entrypoint.sh
+RUN echo "source $APPS_DIR/geant4/install/bin/geant4.sh" >> /docker-entrypoint.sh
 RUN echo "source $APPS_DIR/garfieldpp/install/share/Garfield/setupGarfield.sh" >> /docker-entrypoint.sh
-RUN echo "export ROOT_INCLUDE_PATH=$APPS_DIR/garfieldpp/install/include" >> /docker-entrypoint.sh
 RUN echo "exec \"\$@\"" >> /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 RUN mv /docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
