@@ -27,6 +27,7 @@ on:
 
 env:
   IMAGE_NAME: lobis/root-geant4-garfield
+  VERSION_TAG: cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
 
 jobs:
   build-and-push-image:
@@ -52,20 +53,35 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker image
+      - name: Build parent image
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: true
+          push: false
           build-args: |
             CMAKE_CXX_STANDARD=${{ github.event.inputs.CMAKE_CXX_STANDARD }}
             ROOT_VERSION=${{ github.event.inputs.ROOT_VERSION }}
             GEANT4_VERSION=${{ github.event.inputs.GEANT4_VERSION }}
             GARFIELD_VERSION=${{ github.event.inputs.GARFIELD_VERSION }}
           tags: |
-            ${{ env.IMAGE_NAME }}:cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
+            action/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
+
+      - name: Generate final Dockerfile with Geant4 datase environment variables
+        run: |
+          python3 utils/geant4-dataset-dockerfile.py --image action/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} --output utils/Dockerfile
+          cat utils/Dockerfile
+
+      - name: Build and Push base image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: utils/Dockerfile
+          push: true
+          pull: false
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
             ${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ env.IMAGE_NAME }}:cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
+            ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
 
       - name: Build and Push development Docker image
@@ -83,7 +99,7 @@ jobs:
             PASSWORD=${{ secrets.DEVELOPMENT_PASSWORD }}
             SSH_PUBLIC_KEY=${{ secrets.SSH_PUBLIC_KEY }}
           tags: |
-            ${{ env.IMAGE_NAME }}-dev:cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
+            ${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
             ${{ env.IMAGE_NAME }}-dev:latest
-            ghcr.io/${{ env.IMAGE_NAME }}-dev:cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
+            ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}-dev:latest

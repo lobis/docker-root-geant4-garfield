@@ -70,18 +70,16 @@ RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git --branch=${GARFIELD
     rm -rf $APPS_DIR/garfieldpp/build $APPS_DIR/garfieldpp/source
 
 ENV LD_LIBRARY_PATH $APPS_DIR/garfieldpp/install/lib:$LD_LIBRARY_PATH
-# These env variables should be defined by setupGarfield.sh, 'docker-entrypoint.sh' does not work in non-interactive shell yet so we define manually
+# These env variables should be defined by setupGarfield.sh, the entrypoint could be overriden so we define them manually
 ENV GARFIELD_INSTALL $APPS_DIR/garfieldpp/install
 ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include
 ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database
 
 RUN echo "#!/bin/bash" >> /docker-entrypoint.sh
-RUN echo "echo 'ENTRYPOINT DEBUG'" >> /docker-entrypoint.sh
 RUN echo "source $APPS_DIR/geant4/install/bin/geant4.sh" >> /docker-entrypoint.sh
 RUN echo "source $APPS_DIR/root/install/bin/thisroot.sh" >> /docker-entrypoint.sh
 RUN echo "source $APPS_DIR/garfieldpp/install/share/Garfield/setupGarfield.sh" >> /docker-entrypoint.sh
 RUN echo "export ROOT_INCLUDE_PATH=$APPS_DIR/garfieldpp/install/include" >> /docker-entrypoint.sh
-RUN echo "echo \$ROOTSYS" >> /docker-entrypoint.sh
 RUN echo "exec \"\$@\"" >> /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 RUN mv /docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
