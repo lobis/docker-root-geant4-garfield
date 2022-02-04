@@ -24,6 +24,8 @@ jobs:
         run: |
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
           echo "ROOTSYS: $ROOTSYS"
+          echo "ROOT_INCLUDE_PATH: $ROOT_INCLUDE_PATH"
+          printenv
 
       - name: Check ROOT is available in non-interactive shell
         run: |
