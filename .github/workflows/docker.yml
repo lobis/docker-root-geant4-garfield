@@ -79,8 +79,8 @@ jobs:
           push: true
           pull: false
           tags: |
-            ${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
-            ${{ env.IMAGE_NAME }}:latest
+            docker.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
+            docker.io/${{ env.IMAGE_NAME }}:latest
             ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
 
@@ -99,7 +99,7 @@ jobs:
             PASSWORD=${{ secrets.DEVELOPMENT_PASSWORD }}
             SSH_PUBLIC_KEY=${{ secrets.SSH_PUBLIC_KEY }}
           tags: |
-            ${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
-            ${{ env.IMAGE_NAME }}-dev:latest
+            docker.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
+            docker.io/${{ env.IMAGE_NAME }}-dev:latest
             ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}-dev:latest
