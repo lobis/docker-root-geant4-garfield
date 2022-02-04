@@ -1,8 +1,7 @@
 name: Verify Docker Image
 
-defaults:
-  run:
-    shell: bash
+env:
+  ROOT_INCLUDE_PATH: /usr/local/garfieldpp/install/include/
     
 on:
   workflow_run:
