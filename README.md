@@ -40,7 +40,7 @@ If you want to build the image you need to pass the different versions as argume
 ```
 CMAKE_CXX_STANDARD=17
 ROOT_VERSION=v6-25-01
-GEANT4_VERSION=v10.7.3
+GEANT4_VERSION=v11.0.0
 GARFIELD_VERSION=4.0
 
 docker build --build-arg CMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD --build-arg ROOT_VERSION=$ROOT_VERSION --build-arg GEANT4_VERSION=$GEANT4_VERSION -t lobis/root-geant4-garfieldpp:cpp${CMAKE_CXX_STANDARD}_ROOT-${ROOT_VERSION}_Geant4-${GEANT4_VERSION}_Garfield-${GARFIELD_VERSION} .
