@@ -18,10 +18,10 @@ To use the latest version:
 docker run -it ghcr.io/lobis/root-geant4-garfield:latest
 ```
 
-There are other tags available [here](https://github.com/lobis/docker-root-geant4-garfield/pkgs/container/root-geant4-garfield/versions), which provide different combinations of C++ Standard / ROOT / Geant4 versions. For example, the tag built with C++17, ROOT v6-25-01 and Geant4 v11.0.0 is available as:
+There are other tags available [here](https://github.com/lobis/docker-root-geant4-garfield/pkgs/container/root-geant4-garfield/versions), which provide different combinations of C++ Standard / ROOT / Geant4 / Garfield versions. For example, the tag built with C++17, ROOT v6-25-01, Geant4 v11.0.0 and Garfield 4.0 is available as:
 
 ```
-docker pull ghcr.io/lobis/root-geant4-garfield:cxx17_ROOTv6-25-01_Geant4v11.0.0
+docker pull ghcr.io/lobis/root-geant4-garfield:cxx17_ROOT-v6-25-01_Geant4-v11.0.0_Garfield-4.0
 ```
 
 ## Environment
