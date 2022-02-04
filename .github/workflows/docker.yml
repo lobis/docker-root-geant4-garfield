@@ -66,7 +66,7 @@ jobs:
           tags: |
             action/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
 
-      - name: Generate final Dockerfile with Geant4 datase environment variables
+      - name: Generate final Dockerfile with Geant4 dataset environment variables
         run: |
           python3 utils/geant4-dataset-dockerfile.py --image action/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} --output utils/Dockerfile
           cat utils/Dockerfile
