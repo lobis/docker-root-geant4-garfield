@@ -38,4 +38,8 @@ jobs:
 
       - name: Check Garfield is available from ROOT prompt
         run: |
-          root -e '#include "Garfield/MediumMagboltz.hh"; using namespace Garfield; MediumMagboltz gas; return 0;' -q
+          root -e '
+          #include "Garfield/MediumMagboltz.hh"
+          using namespace Garfield;
+          MediumMagboltz gas;
+          return 0;' -q
