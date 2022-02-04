@@ -16,10 +16,10 @@ def main():
     print(version)
 
     docker_image = args.image
-    result = subprocess.run(f"docker run -it {docker_image} geant4-config --datasets".split(), stdout=subprocess.PIPE)
+    result = subprocess.run(f"docker run {docker_image} geant4-config --datasets".split(), stdout=subprocess.PIPE)
     datasets = result.stdout.decode('utf-8')
     print(datasets)
-    
+
     env_variables = dict()
     print(f"Geant4 datasets:")
     # datasets should be a multi-line string with 3 words per line (name, env var, path)
