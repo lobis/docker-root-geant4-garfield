@@ -10,7 +10,7 @@ on:
       ROOT_VERSION:
         description: "ROOT Version (GitHub branch / tag / commit)"
         required: true
-        default: "v6-25-01"
+        default: "v6-25-02"
       GEANT4_VERSION:
         description: "Geant4 Version (GitHub branch / tag / commit)"
         required: true
