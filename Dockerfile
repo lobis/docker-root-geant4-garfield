@@ -39,7 +39,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # ROOT
-RUN git clone https://github.com/root-project/root.git --branch=${ROOT_VERSION} --depth 1 $APPS_DIR/root/source && \
+RUN git clone https://github.com/root-project/root.git $APPS_DIR/root/source && \
+    cd $APPS_DIR/root/source && git reset --hard ${ROOT_VERSION} && \
     mkdir -p $APPS_DIR/root/build &&  cd $APPS_DIR/root/build && \
     cmake $APPS_DIR/root/source -DCMAKE_INSTALL_PREFIX=$APPS_DIR/root/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD -Dgdml=ON -Dbuiltin_afterimage=ON && \
     make -j$(nproc) install && \
@@ -50,7 +51,8 @@ ENV LD_LIBRARY_PATH $APPS_DIR/root/install/lib:$LD_LIBRARY_PATH
 ENV PYTHONPATH $APPS_DIR/root/install/lib:$PYTHONPATH
 
 # GARFIELD
-RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git --branch=${GARFIELD_VERSION} --depth 1 $APPS_DIR/garfieldpp/source && \
+RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git $APPS_DIR/garfieldpp/source && \
+    cd $APPS_DIR/garfieldpp/source && git reset --hard ${GARFIELD_VERSION} && \
     mkdir -p $APPS_DIR/garfieldpp/build &&  cd $APPS_DIR/garfieldpp/build && \
     cmake ../source/ -DCMAKE_INSTALL_PREFIX=$APPS_DIR/garfieldpp/install \
     -DWITH_EXAMPLES=OFF -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD && \
@@ -63,7 +65,8 @@ ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include
 ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database
 
 # GEANT4
-RUN git clone https://github.com/Geant4/geant4.git --branch=${GEANT4_VERSION} --depth 1 $APPS_DIR/geant4/source && \
+RUN git clone https://github.com/Geant4/geant4.git $APPS_DIR/geant4/source && \
+    cd $APPS_DIR/geant4/source && git reset --hard ${GEANT4_VERSION} && \
     mkdir -p $APPS_DIR/geant4/build &&  cd $APPS_DIR/geant4/build && \
     cmake ../source/ -DCMAKE_INSTALL_PREFIX=$APPS_DIR/geant4/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD -DGEANT4_BUILD_CXXSTD=$CMAKE_CXX_STANDARD \
     -DGEANT4_BUILD_MULTITHREADED=ON -DGEANT4_USE_QT=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACER_X11=ON \
@@ -77,8 +80,8 @@ ENV LD_LIBRARY_PATH $APPS_DIR/geant4/install/lib:$LD_LIBRARY_PATH
 # Entrypoint
 RUN echo "#!/bin/bash" >> /docker-entrypoint.sh
 RUN echo "source $APPS_DIR/root/install/bin/thisroot.sh" >> /docker-entrypoint.sh
-RUN echo "source $APPS_DIR/geant4/install/bin/geant4.sh" >> /docker-entrypoint.sh
 RUN echo "source $APPS_DIR/garfieldpp/install/share/Garfield/setupGarfield.sh" >> /docker-entrypoint.sh
+RUN echo "source $APPS_DIR/geant4/install/bin/geant4.sh" >> /docker-entrypoint.sh
 RUN echo "exec \"\$@\"" >> /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 RUN mv /docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
