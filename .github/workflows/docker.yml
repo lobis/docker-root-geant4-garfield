@@ -10,7 +10,7 @@ on:
       ROOT_VERSION:
         description: "ROOT Version (GitHub branch / tag / commit)"
         required: true
-        default: "v6-25-02"
+        default: "v6-26-00"
       GEANT4_VERSION:
         description: "Geant4 Version (GitHub branch / tag / commit)"
         required: true
@@ -18,12 +18,12 @@ on:
       GARFIELD_VERSION:
         description: "Garfield Version (GitLab branch / tag / commit)"
         required: true
-        default: "4.0"
+        default: "af4a1451"
 
       target:
         required: true
         description: Name of the runner to build the image on (self-hosted, ubuntu-latest, ...)
-        default: self-hosted
+        default: ubuntu-latest
 
 env:
   IMAGE_NAME: lobis/root-geant4-garfield
