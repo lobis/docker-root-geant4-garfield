@@ -26,11 +26,11 @@ ARG APPS_DIR=/usr/local
 ENV DEBIAN_FRONTEND="noninteractive"
 RUN apt-get update && \
     apt-get install -y \
-    apt-utils binutils build-essential ca-certificates cmake wget curl davix-dev dcap-dev dpkg-dev fonts-freefont-ttf g++ gcc gfortran \
+    apt binutils build-essential cmake wget curl davix-dev dcap-dev fonts-freefont-ttf g++ gcc gfortran \
     git libafterimage-dev libcfitsio-dev libexpat-dev libfcgi-dev libfftw3-dev libfreetype6-dev libftgl-dev libgfal2-dev libgif-dev \
     libgl2ps-dev libglew-dev libglu-dev libgraphviz-dev libgsl-dev libjpeg-dev liblz4-dev liblzma-dev libmpc-dev libmysqlclient-dev  \
     libpcre++-dev libpng-dev libpq-dev libpythia8-dev libspdlog-dev libsqlite3-dev libssl-dev libtbb-dev libtiff-dev libx11-dev \
-    libxerces-c-dev libxext-dev libxft-dev libxml2-dev libxmu-dev libxpm-dev libxxhash-dev libz-dev libzstd-dev locales make openssl \
+    libxerces-c-dev libxext-dev libxft-dev libxml2-dev libxmu-dev libxpm-dev libxxhash-dev libz-dev libzstd-dev make openssl \
     python3-dev python3-pip ntp qt5-default software-properties-common srm-ifce-dev unixodbc-dev \
     libpq-dev postgresql-server-dev-all libboost-all-dev && \
     apt-get autoremove -y && \
