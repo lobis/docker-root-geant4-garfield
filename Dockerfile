@@ -78,6 +78,15 @@ RUN git clone https://github.com/Geant4/geant4.git $APPS_DIR/geant4/source && \
 ENV PATH $APPS_DIR/geant4/install/bin:$PATH
 ENV LD_LIBRARY_PATH $APPS_DIR/geant4/install/lib:$LD_LIBRARY_PATH
 
+# Version command
+RUN echo "#!/bin/bash" >> /version.sh
+RUN echo "echo '- CMAKE_CXX_STANDARD: $CMAKE_CXX_STANDARD'" >> /version.sh
+RUN echo "echo '- ROOT_VERSION: $ROOT_VERSION'" >> /version.sh
+RUN echo "echo '- GEANT4_VERSION: $GEANT4_VERSION'" >> /version.sh
+RUN echo "echo '- GARFIELD_VERSION: $GARFIELD_VERSION'" >> /version.sh
+RUN chmod +x /version.sh
+RUN mv /version.sh /usr/local/bin/version.sh
+
 # Entrypoint
 RUN echo "#!/bin/bash" >> /docker-entrypoint.sh
 RUN echo "source $APPS_DIR/root/install/bin/thisroot.sh" >> /docker-entrypoint.sh
