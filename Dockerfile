@@ -46,6 +46,7 @@ RUN git clone https://github.com/root-project/root.git $APPS_DIR/root/source && 
     make -j$(nproc) install && \
     rm -rf $APPS_DIR/root/build $APPS_DIR/root/source
 
+ENV ROOTSYS $APPS_DIR/root/install
 ENV PATH $APPS_DIR/root/install/bin:$PATH
 ENV LD_LIBRARY_PATH $APPS_DIR/root/install/lib:$LD_LIBRARY_PATH
 ENV PYTHONPATH $APPS_DIR/root/install/lib:$PYTHONPATH
