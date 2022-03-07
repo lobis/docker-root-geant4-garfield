@@ -58,8 +58,8 @@ ENTRYPOINT ["/tini", "--"]
 
 WORKDIR /
 
-EXPOSE 22 # ssh
-EXPOSE 8888 # jupyter
-EXPOSE 9000 # ROOT web gui
+#EXPOSE 22 # ssh
+#EXPOSE 8888 # jupyter
+#EXPOSE 9000 # ROOT web gui
 
 CMD ["/usr/sbin/sshd", "-D", "-e"]
