@@ -17,6 +17,10 @@ RUN apt-get update \
     && apt-get install -y sudo ssh xauth xorg build-essential gcc g++ gdb clang cmake rsync tar python nano x11-apps xdg-utils nodejs screen \
     && apt-get upgrade -y && apt-get clean
 
+# ROOT
+# change default GUI port to a fixed one instead of a range
+RUN sed -i "/WebGui.HttpPort:/c\WebGui.HttpPort:            9000" $ROOTSYS/etc/system.rootrc
+
 # Jupyter
 RUN pip3 -q install pip --upgrade && \
     pip3 list --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1 | xargs -n1 pip3 -q install && \
@@ -53,5 +57,9 @@ RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
 WORKDIR /
+
+EXPOSE 22 # ssh
+EXPOSE 8888 # jupyter
+EXPOSE 9000 # ROOT web gui
 
 CMD ["/usr/sbin/sshd", "-D", "-e"]
