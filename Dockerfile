@@ -5,10 +5,15 @@ LABEL maintainer.email="luis.antonio.obis@gmail.com"
 
 LABEL org.opencontainers.image.source="https://github.com/lobis/docker-root-geant4-garfield"
 
-ENV CMAKE_CXX_STANDARD=17
-ENV ROOT_VERSION=master
-ENV GEANT4_VERSION=master
-ENV GARFIELD_VERSION=master
+ARG CMAKE_CXX_STANDARD=17
+ARG ROOT_VERSION=master
+ARG GEANT4_VERSION=master
+ARG GARFIELD_VERSION=master
+
+ENV CMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
+ENV ROOT_VERSION=${ROOT_VERSION}
+ENV GEANT4_VERSION=${GEANT4_VERSION}
+ENV GARFIELD_VERSION=${GARFIELD_VERSION}
 
 LABEL org.opencontainers.image.description="ROOT (${ROOT_VERSION}), \
     Geant4 (${GEANT4_VERSION}) and \
