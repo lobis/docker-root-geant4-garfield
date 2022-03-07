@@ -20,6 +20,9 @@ jobs:
       image: ghcr.io/lobis/root-geant4-garfield${{ github.event.inputs.tag }}
 
     steps:
+      - name: Print dependencies version
+        run: version.sh
+          
       - name: Print environment variables
         run: |
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
