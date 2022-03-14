@@ -18,7 +18,7 @@ on:
       GARFIELD_VERSION:
         description: "Garfield Version (GitLab branch / tag / commit)"
         required: true
-        default: "af4a1451"
+        default: "4ac1e62f"
 
       target:
         required: true
