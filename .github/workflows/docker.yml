@@ -62,7 +62,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CONTAINER_REGISTRY_GITHUB_TOKEN }}
 
-      - name: Build parent image
+      - name: Build parent to base image
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -75,12 +75,12 @@ jobs:
           tags: |
             action/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
 
-      - name: Generate final Dockerfile with Geant4 dataset environment variables
+      - name: Generate final base Dockerfile with Geant4 dataset environment variables
         run: |
           python3 utils/geant4-dataset-dockerfile.py --image action/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} --output utils/Dockerfile
           cat utils/Dockerfile
 
-      - name: Build image
+      - name: Build base image
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -91,19 +91,16 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
 
-      - name: Add additional tag
+      - name: Add additional tag to base image
         if: ${{ github.event.inputs.rest-for-physics }}
         run: docker tag ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}:rest-for-physics
-
-      - name: Push image
-        run: docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
 
       - name: Build development image
         uses: docker/build-push-action@v2
         with:
           context: .
           file: development/Dockerfile
-          push: true
+          push: false
           pull: true
           build-args: |
             CMAKE_CXX_STANDARD=${{ github.event.inputs.CMAKE_CXX_STANDARD }}
@@ -119,6 +116,9 @@ jobs:
       - name: Add additional tag to development image
         if: ${{ github.event.inputs.rest-for-physics }}
         run: docker tag ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-dev:rest-for-physics
+
+      - name: Push base image
+        run: docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
 
       - name: Push development image
         run: docker push ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
