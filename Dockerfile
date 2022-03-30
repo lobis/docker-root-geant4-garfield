@@ -3,7 +3,7 @@ ARG ROOT_VERSION
 ARG GEANT4_VERSION
 ARG GARFIELD_VERSION
 
-FROM ubuntu:latest
+FROM ubuntu:20.04
 
 LABEL maintainer.name="Luis Obis"
 LABEL maintainer.email="luis.antonio.obis@gmail.com"
