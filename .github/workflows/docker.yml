@@ -62,10 +62,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CONTAINER_REGISTRY_GITHUB_TOKEN }}
 
-      - name: test step
-        if: ${{ github.event.inputs.rest-for-physics }}
-        run: echo "flag set to true"
-
       - name: Build parent image
         uses: docker/build-push-action@v2
         with:
@@ -84,18 +80,25 @@ jobs:
           python3 utils/geant4-dataset-dockerfile.py --image action/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} --output utils/Dockerfile
           cat utils/Dockerfile
 
-      - name: Build and Push image
+      - name: Build image
         uses: docker/build-push-action@v2
         with:
           context: .
           file: utils/Dockerfile
-          push: true
+          push: false
           pull: false
           tags: |
             ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
 
-      - name: Build and Push development image
+      - name: Add additional tag
+        if: ${{ github.event.inputs.rest-for-physics }}
+        run: docker tag ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}:rest-for-physics
+
+      - name: Push image
+        run: docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
+
+      - name: Build development image
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -112,3 +115,10 @@ jobs:
           tags: |
             ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}-dev:latest
+
+      - name: Add additional tag to development image
+        if: ${{ github.event.inputs.rest-for-physics }}
+        run: docker tag ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-dev:rest-for-physics
+
+      - name: Push development image
+        run: docker push ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
