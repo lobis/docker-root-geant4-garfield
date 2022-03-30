@@ -118,7 +118,11 @@ jobs:
         run: docker tag ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-dev:rest-for-physics
 
       - name: Push base image
-        run: docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
+        run: |
+          docker image ls | grep ghcr.io/${{ env.IMAGE_NAME }}
+          docker push --all-tags ghcr.io/${{ env.IMAGE_NAME }}
 
       - name: Push development image
-        run: docker push ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }}
+        run: |
+          docker image ls | grep ghcr.io/${{ env.IMAGE_NAME }}-dev
+          docker push --all-tags ghcr.io/${{ env.IMAGE_NAME }}-dev
