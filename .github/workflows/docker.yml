@@ -4,9 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       CMAKE_CXX_STANDARD:
-        description: "CMake C++ Standard (11, 14, 17, ...)"
-        required: true
+        description: "CMake C++ Standard"
         default: "17"
+        type: choice
+        required: true
+        options:
+          - "11"
+          - "14"
+          - "17"
       ROOT_VERSION:
         description: "ROOT Version (GitHub branch / tag / commit)"
         required: true
@@ -21,9 +26,13 @@ on:
         default: "4ac1e62f"
 
       target:
-        required: true
-        description: Name of the runner to build the image on (self-hosted, ubuntu-latest, ...)
+        description: Name of the runner to build the image on
         default: ubuntu-latest
+        required: true
+        type: choice
+        options:
+          - ubuntu-latest
+          - self-hosted
 
 env:
   IMAGE_NAME: lobis/root-geant4-garfield
