@@ -34,6 +34,12 @@ on:
           - ubuntu-latest
           - self-hosted
 
+      rest-for-physics:
+        description: Use this tag as the default image for testing `rest-for-physics` framework
+        type: boolean
+        required: true
+        default: false
+
 env:
   IMAGE_NAME: lobis/root-geant4-garfield
   VERSION_TAG: cpp${{ github.event.inputs.CMAKE_CXX_STANDARD }}_ROOT-${{ github.event.inputs.ROOT_VERSION }}_Geant4-${{ github.event.inputs.GEANT4_VERSION }}_Garfield-${{ github.event.inputs.GARFIELD_VERSION }}
