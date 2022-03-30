@@ -1,30 +1,14 @@
+ARG CMAKE_CXX_STANDARD
+ARG ROOT_VERSION
+ARG GEANT4_VERSION
+ARG GARFIELD_VERSION
+
 FROM ubuntu:latest
 
 LABEL maintainer.name="Luis Obis"
 LABEL maintainer.email="luis.antonio.obis@gmail.com"
 
 LABEL org.opencontainers.image.source="https://github.com/lobis/docker-root-geant4-garfield"
-
-ARG CMAKE_CXX_STANDARD=17
-ARG ROOT_VERSION=master
-ARG GEANT4_VERSION=master
-ARG GARFIELD_VERSION=master
-
-ENV CMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
-ENV ROOT_VERSION=${ROOT_VERSION}
-ENV GEANT4_VERSION=${GEANT4_VERSION}
-ENV GARFIELD_VERSION=${GARFIELD_VERSION}
-
-LABEL org.opencontainers.image.description="ROOT (${ROOT_VERSION}), \
-    Geant4 (${GEANT4_VERSION}) and \
-    Garfield (${GARFIELD_VERSION}) \
-    compiled with C++${CMAKE_CXX_STANDARD}.\
-    "
-
-RUN echo CMAKE_CXX_STANDARD: ${CMAKE_CXX_STANDARD}
-RUN echo ROOT_VERSION: ${ROOT_VERSION}
-RUN echo GEANT4_VERSION: ${GEANT4_VERSION}
-RUN echo GARFIELD_VERSION: ${GARFIELD_VERSION}
 
 ARG APPS_DIR=/usr/local
 
@@ -43,7 +27,15 @@ RUN apt-get update && \
     rm -rf /var/cache/apt/archives/* && \
     rm -rf /var/lib/apt/lists/*
 
+ARG CMAKE_CXX_STANDARD=17
+ENV CMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
+RUN echo CMAKE_CXX_STANDARD: ${CMAKE_CXX_STANDARD}
+
 # ROOT
+ARG ROOT_VERSION=master
+ENV ROOT_VERSION=${ROOT_VERSION}
+RUN echo ROOT_VERSION: ${ROOT_VERSION}
+
 RUN git clone https://github.com/root-project/root.git $APPS_DIR/root/source && \
     cd $APPS_DIR/root/source && git reset --hard ${ROOT_VERSION} && \
     mkdir -p $APPS_DIR/root/build &&  cd $APPS_DIR/root/build && \
@@ -57,6 +49,10 @@ ENV LD_LIBRARY_PATH $APPS_DIR/root/install/lib:$LD_LIBRARY_PATH
 ENV PYTHONPATH $APPS_DIR/root/install/lib:$PYTHONPATH
 
 # GARFIELD
+ARG GARFIELD_VERSION=master
+ENV GARFIELD_VERSION=${GARFIELD_VERSION}
+RUN echo GARFIELD_VERSION: ${GARFIELD_VERSION}
+
 RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git $APPS_DIR/garfieldpp/source && \
     cd $APPS_DIR/garfieldpp/source && git reset --hard ${GARFIELD_VERSION} && \
     mkdir -p $APPS_DIR/garfieldpp/build &&  cd $APPS_DIR/garfieldpp/build && \
@@ -71,6 +67,10 @@ ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include
 ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database
 
 # GEANT4
+ARG GEANT4_VERSION=master
+ENV GEANT4_VERSION=${GEANT4_VERSION}
+RUN echo GEANT4_VERSION: ${GEANT4_VERSION}
+
 RUN git clone https://github.com/Geant4/geant4.git $APPS_DIR/geant4/source && \
     cd $APPS_DIR/geant4/source && git reset --hard ${GEANT4_VERSION} && \
     mkdir -p $APPS_DIR/geant4/build &&  cd $APPS_DIR/geant4/build && \
@@ -91,6 +91,12 @@ RUN echo "echo '- GEANT4_VERSION: $GEANT4_VERSION'" >> /version.sh
 RUN echo "echo '- GARFIELD_VERSION: $GARFIELD_VERSION'" >> /version.sh
 RUN chmod +x /version.sh
 RUN mv /version.sh /usr/local/bin/version.sh
+
+LABEL org.opencontainers.image.description="ROOT (${ROOT_VERSION}), \
+    Geant4 (${GEANT4_VERSION}) and \
+    Garfield (${GARFIELD_VERSION}) \
+    compiled with C++${CMAKE_CXX_STANDARD}.\
+    "
 
 # Entrypoint
 RUN echo "#!/bin/bash" >> /docker-entrypoint.sh
