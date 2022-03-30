@@ -93,7 +93,7 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}:latest
 
       - name: Add additional tag to base image and push it
-        if: ${{ github.event.inputs.rest-for-physics == "true" }}
+        if: ${{ github.event.inputs.rest-for-physics == 'true' }}
         run: |
           docker tag ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}:rest-for-physics
           docker push ghcr.io/${{ env.IMAGE_NAME }}:rest-for-physics
@@ -117,7 +117,7 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}-dev:latest
 
       - name: Add additional tag to development image and push it
-        if: ${{ github.event.inputs.rest-for-physics == "true" }}
+        if: ${{ github.event.inputs.rest-for-physics == 'true' }}
         run: |
           docker tag ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-dev:rest-for-physics
           docker push ghcr.io/${{ env.IMAGE_NAME }}-dev:rest-for-physics
