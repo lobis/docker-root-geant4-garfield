@@ -25,6 +25,11 @@ on:
         required: true
         default: "4ac1e62f"
 
+      additional-tag:
+        description: Additional tag for Docker Image
+        type: string
+        required: false
+
       target:
         description: Name of the runner to build the image on
         default: ubuntu-latest
@@ -33,12 +38,6 @@ on:
         options:
           - ubuntu-latest
           - self-hosted
-
-      rest-for-physics:
-        description: Use this tag as the default image for testing `rest-for-physics` framework
-        type: boolean
-        required: true
-        default: false
 
 env:
   IMAGE_NAME: lobis/root-geant4-garfield
@@ -93,10 +92,10 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}:latest
 
       - name: Add additional tag to base image and push it
-        if: ${{ github.event.inputs.rest-for-physics == 'true' }}
+        if: ${{ github.event.inputs.additional-tag }}
         run: |
-          docker tag ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}:rest-for-physics
-          docker push ghcr.io/${{ env.IMAGE_NAME }}:rest-for-physics
+          docker tag ghcr.io/${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}:${{ github.event.inputs.additional-tag }}
+          docker push ghcr.io/${{ env.IMAGE_NAME }}:${{ github.event.inputs.additional-tag }}
 
       - name: Build and Push development image
         uses: docker/build-push-action@v2
@@ -117,7 +116,7 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}-dev:latest
 
       - name: Add additional tag to development image and push it
-        if: ${{ github.event.inputs.rest-for-physics == 'true' }}
+        if: ${{ github.event.inputs.additional-tag }}
         run: |
-          docker tag ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-dev:rest-for-physics
-          docker push ghcr.io/${{ env.IMAGE_NAME }}-dev:rest-for-physics
+          docker tag ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ github.event.inputs.additional-tag }}
+          docker push ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ github.event.inputs.additional-tag }}
