@@ -3,7 +3,7 @@ ARG ROOT_VERSION
 ARG GEANT4_VERSION
 ARG GARFIELD_VERSION
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL maintainer.name="Luis Obis"
 LABEL maintainer.email="luis.antonio.obis@gmail.com"
@@ -18,7 +18,7 @@ RUN apt-get update && \
     apt binutils build-essential cmake wget curl davix-dev dcap-dev xdg-utils fonts-freefont-ttf g++ gcc gfortran \
     git libafterimage-dev libcfitsio-dev libexpat-dev libfcgi-dev libfftw3-dev libfreetype6-dev libftgl-dev libgfal2-dev libgif-dev \
     libgl2ps-dev libglew-dev libglu-dev libgraphviz-dev libgsl-dev libjpeg-dev liblz4-dev liblzma-dev libmpc-dev libmysqlclient-dev  \
-    libpcre++-dev libpng-dev libpq-dev libpythia8-dev libspdlog-dev libsqlite3-dev libssl-dev libtbb-dev libtiff-dev libx11-dev \
+    libpcre++-dev libpng-dev libpq-dev libspdlog-dev libsqlite3-dev libssl-dev libtbb-dev libtiff-dev libx11-dev \
     libxerces-c-dev libxext-dev libxft-dev libxml2-dev libxmu-dev libxpm-dev libxxhash-dev libz-dev libzstd-dev make openssl \
     python3-dev python3-pip python-is-python3 ntp qt5-default software-properties-common srm-ifce-dev unixodbc-dev \
     libpq-dev postgresql-server-dev-all libboost-all-dev libcurl4-openssl-dev && \
