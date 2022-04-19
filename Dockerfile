@@ -21,7 +21,7 @@ RUN apt-get update && \
     libpcre++-dev libpng-dev libpq-dev libspdlog-dev libsqlite3-dev libssl-dev libtbb-dev libtiff-dev libx11-dev \
     libxerces-c-dev libxext-dev libxft-dev libxml2-dev libxmu-dev libxpm-dev libxxhash-dev libz-dev libzstd-dev make openssl \
     python3-dev python3-pip python-is-python3 ntp software-properties-common srm-ifce-dev unixodbc-dev \
-    libpq-dev postgresql-server-dev-all libboost-all-dev libcurl4-openssl-dev && \
+    libpq-dev postgresql-server-dev-all libboost-all-dev libcurl4-openssl-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools && \
     apt-get autoremove -y && \
     apt-get clean -y && \
     rm -rf /var/cache/apt/archives/* && \
