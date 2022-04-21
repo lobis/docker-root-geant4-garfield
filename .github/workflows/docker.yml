@@ -125,7 +125,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: REST-for-Physics/Dockerfile
+          file: rest-for-physics/Dockerfile
           push: true
           pull: true
           build-args: |
