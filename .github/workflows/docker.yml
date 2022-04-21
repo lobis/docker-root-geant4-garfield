@@ -120,3 +120,25 @@ jobs:
         run: |
           docker tag ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ github.event.inputs.additional-tag }}
           docker push ghcr.io/${{ env.IMAGE_NAME }}-dev:${{ github.event.inputs.additional-tag }}
+
+      - name: Build and Push REST-for-Physics development image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: REST-for-Physics/Dockerfile
+          push: true
+          pull: true
+          build-args: |
+            CMAKE_CXX_STANDARD=${{ github.event.inputs.CMAKE_CXX_STANDARD }}
+            ROOT_VERSION=${{ github.event.inputs.ROOT_VERSION }}
+            GEANT4_VERSION=${{ github.event.inputs.GEANT4_VERSION }}
+            GARFIELD_VERSION=${{ github.event.inputs.GARFIELD_VERSION }}
+          tags: |
+            ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:${{ env.VERSION_TAG }}
+            ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:latest
+
+      - name: Add additional tag to development image and push it
+        if: ${{ github.event.inputs.additional-tag }}
+        run: |
+          docker tag ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:${{ github.event.inputs.additional-tag }}
+          docker push ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:${{ github.event.inputs.additional-tag }}
