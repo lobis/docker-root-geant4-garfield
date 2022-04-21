@@ -137,7 +137,7 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:${{ env.VERSION_TAG }}
             ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:latest
 
-      - name: Add additional tag to development image and push it
+      - name: Add additional tag to REST development image and push it
         if: ${{ github.event.inputs.additional-tag }}
         run: |
           docker tag ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:${{ github.event.inputs.additional-tag }}
