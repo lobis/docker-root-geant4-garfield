@@ -7,7 +7,7 @@ FROM ghcr.io/lobis/root-geant4-garfield-dev:cpp${CMAKE_CXX_STANDARD}_ROOT-${ROOT
 
 ENV REST_PATH /usr/local/rest-for-physics
 
-RUN git clone git@github.com:rest-for-physics/framework.git /tmp/framework \
+RUN git clone https://github.com/rest-for-physics/framework.git /tmp/framework \
     && cd /tmp/framework \
     && python3 pull-submodules.py --clean --force --dontask --latest:master \
     && mkdir build && cd build \
