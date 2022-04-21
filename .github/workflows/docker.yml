@@ -134,11 +134,11 @@ jobs:
             GEANT4_VERSION=${{ github.event.inputs.GEANT4_VERSION }}
             GARFIELD_VERSION=${{ github.event.inputs.GARFIELD_VERSION }}
           tags: |
-            ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:${{ env.VERSION_TAG }}
-            ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:latest
+            ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:${{ env.VERSION_TAG }}
+            ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:latest
 
       - name: Add additional tag to development image and push it
         if: ${{ github.event.inputs.additional-tag }}
         run: |
-          docker tag ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:${{ github.event.inputs.additional-tag }}
-          docker push ghcr.io/${{ env.IMAGE_NAME }}-REST-dev:${{ github.event.inputs.additional-tag }}
+          docker tag ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:${{ env.VERSION_TAG }} ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:${{ github.event.inputs.additional-tag }}
+          docker push ghcr.io/${{ env.IMAGE_NAME }}-rest-dev:${{ github.event.inputs.additional-tag }}
