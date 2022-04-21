@@ -61,10 +61,11 @@ RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git $APPS_DIR/garfieldp
     make -j$(nproc) install && \
     rm -rf $APPS_DIR/garfieldpp/build $APPS_DIR/garfieldpp/source
 
-ENV LD_LIBRARY_PATH $APPS_DIR/garfieldpp/install/lib:$LD_LIBRARY_PATH
 ENV GARFIELD_INSTALL $APPS_DIR/garfieldpp/install
-ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include
+ENV CMAKE_PREFIX_PATH=$APPS_DIR/garfieldpp/install:$CMAKE_PREFIX_PATH
 ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database
+ENV LD_LIBRARY_PATH $APPS_DIR/garfieldpp/install/lib:$LD_LIBRARY_PATH
+ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include
 
 # GEANT4
 ARG GEANT4_VERSION=master
