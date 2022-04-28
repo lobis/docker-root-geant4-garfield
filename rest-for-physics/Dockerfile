@@ -18,6 +18,8 @@ RUN git clone https://github.com/rest-for-physics/framework.git /tmp/framework \
 ENV PATH $REST_PATH/bin:$PATH
 ENV LD_LIBRARY_PATH $REST_PATH/lib:$LD_LIBRARY_PATH
 
+RUN echo "source $REST_PATH/thisREST.sh" >> ~/.bashrc
+
 ENTRYPOINT ["/tini", "--"]
 
 WORKDIR /
