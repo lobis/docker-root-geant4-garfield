@@ -93,11 +93,7 @@ RUN echo "echo '- GARFIELD_VERSION: $GARFIELD_VERSION'" >> /version.sh
 RUN chmod +x /version.sh
 RUN mv /version.sh /usr/local/bin/version.sh
 
-LABEL org.opencontainers.image.description="ROOT (${ROOT_VERSION}), \
-    Geant4 (${GEANT4_VERSION}) and \
-    Garfield (${GARFIELD_VERSION}) \
-    compiled with C++${CMAKE_CXX_STANDARD}.\
-    "
+LABEL org.opencontainers.image.description="ROOT, Geant4 and Garfield++ on Ubuntu 22.04"
 
 # Entrypoint
 RUN echo "#!/bin/bash" >> /docker-entrypoint.sh
