@@ -66,6 +66,7 @@ ENV CMAKE_PREFIX_PATH=$APPS_DIR/garfieldpp/install:$CMAKE_PREFIX_PATH
 ENV HEED_DATABASE $APPS_DIR/garfieldpp/install/share/Heed/database
 ENV LD_LIBRARY_PATH $APPS_DIR/garfieldpp/install/lib:$LD_LIBRARY_PATH
 ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include:$ROOT_INCLUDE_PATH
+ENV ROOT_INCLUDE_PATH $APPS_DIR/garfieldpp/install/include/Garfield:$ROOT_INCLUDE_PATH
 
 # GEANT4
 ARG GEANT4_VERSION=master
