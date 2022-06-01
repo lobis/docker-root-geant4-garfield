@@ -5,7 +5,7 @@ ARG GARFIELD_VERSION
 
 FROM ubuntu:22.04
 
-LABEL maintainer.name="Luis Obis"
+LABEL maintainer.name="Luis Antonio Obis Aparicio"
 LABEL maintainer.email="luis.antonio.obis@gmail.com"
 
 LABEL org.opencontainers.image.source="https://github.com/lobis/docker-root-geant4-garfield"
@@ -36,8 +36,8 @@ ARG ROOT_VERSION=master
 ENV ROOT_VERSION=${ROOT_VERSION}
 RUN echo ROOT_VERSION: ${ROOT_VERSION}
 
-RUN git clone https://github.com/root-project/root.git $APPS_DIR/root/source && \
-    cd $APPS_DIR/root/source && git reset --hard ${ROOT_VERSION} && \
+RUN git clone https://github.com/root-project/root.git $APPS_DIR/root/source --branch=${ROOT_VERSION} && \
+    cd $APPS_DIR/root/source && \
     mkdir -p $APPS_DIR/root/build &&  cd $APPS_DIR/root/build && \
     cmake $APPS_DIR/root/source -DCMAKE_INSTALL_PREFIX=$APPS_DIR/root/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD -Dgdml=ON -Dbuiltin_afterimage=ON && \
     make -j$(nproc) install && \
@@ -73,8 +73,8 @@ ARG GEANT4_VERSION=master
 ENV GEANT4_VERSION=${GEANT4_VERSION}
 RUN echo GEANT4_VERSION: ${GEANT4_VERSION}
 
-RUN git clone https://github.com/Geant4/geant4.git $APPS_DIR/geant4/source && \
-    cd $APPS_DIR/geant4/source && git reset --hard ${GEANT4_VERSION} && \
+RUN git clone https://github.com/Geant4/geant4.git $APPS_DIR/geant4/source --branch=${GEANT4_VERSION} && \
+    cd $APPS_DIR/geant4/source && \
     mkdir -p $APPS_DIR/geant4/build &&  cd $APPS_DIR/geant4/build && \
     cmake ../source/ -DCMAKE_INSTALL_PREFIX=$APPS_DIR/geant4/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD -DGEANT4_BUILD_CXXSTD=$CMAKE_CXX_STANDARD \
     -DGEANT4_BUILD_MULTITHREADED=ON -DGEANT4_USE_QT=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACER_X11=ON \
