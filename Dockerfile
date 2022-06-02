@@ -39,7 +39,7 @@ RUN echo ROOT_VERSION: ${ROOT_VERSION}
 RUN git clone https://github.com/root-project/root.git $APPS_DIR/root/source --branch=${ROOT_VERSION} && \
     cd $APPS_DIR/root/source && \
     mkdir -p $APPS_DIR/root/build &&  cd $APPS_DIR/root/build && \
-    cmake $APPS_DIR/root/source -DCMAKE_INSTALL_PREFIX=$APPS_DIR/root/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD -Dgdml=ON -Dbuiltin_afterimage=ON && \
+    cmake $APPS_DIR/root/source -DCMAKE_INSTALL_PREFIX=$APPS_DIR/root/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD -Dbuiltin_afterimage=ON -Dgnuinstall=ON && \
     make -j$(nproc) install && \
     rm -rf $APPS_DIR/root/build $APPS_DIR/root/source
 
