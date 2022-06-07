@@ -16,7 +16,7 @@ RUN apt-get update \
 
 # ROOT
 # change default GUI port to a fixed one instead of a range
-RUN sed -i "/WebGui.HttpPort:/c\WebGui.HttpPort:            9000" $ROOTSYS/etc/system.rootrc
+RUN sed -i "/WebGui.HttpPort:/c\WebGui.HttpPort:            9000" $ROOTSYS/etc/root/system.rootrc
 
 # Jupyter
 RUN pip3 -q install pip --upgrade && \
