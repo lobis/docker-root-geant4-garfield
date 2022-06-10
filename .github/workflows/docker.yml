@@ -15,7 +15,7 @@ on:
       ROOT_VERSION:
         description: "ROOT Version (GitHub branch / tag / commit)"
         required: true
-        default: "v6-26-02"
+        default: "v6-26-04"
       GEANT4_VERSION:
         description: "Geant4 Version (GitHub branch / tag / commit)"
         required: true
@@ -23,7 +23,7 @@ on:
       GARFIELD_VERSION:
         description: "Garfield Version (GitLab branch / tag / commit)"
         required: true
-        default: "4ac1e62f"
+        default: "eb1b5403"
 
       additional-tag:
         description: Additional tag for Docker Image
