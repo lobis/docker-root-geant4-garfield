@@ -15,7 +15,7 @@ on:
       ROOT_VERSION:
         description: "ROOT Version (GitHub branch / tag / commit)"
         required: true
-        default: "v6-26-04"
+        default: "v6-26-06"
       GEANT4_VERSION:
         description: "Geant4 Version (GitHub branch / tag / commit)"
         required: true
