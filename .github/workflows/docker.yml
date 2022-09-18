@@ -19,7 +19,7 @@ on:
       GEANT4_VERSION:
         description: "Geant4 Version (GitHub branch / tag / commit)"
         required: true
-        default: "v11.0.2"
+        default: "v11.0.3"
       GARFIELD_VERSION:
         description: "Garfield Version (GitLab branch / tag / commit)"
         required: true
