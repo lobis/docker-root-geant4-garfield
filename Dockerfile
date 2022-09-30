@@ -38,7 +38,7 @@ RUN echo ROOT_VERSION: ${ROOT_VERSION}
 
 RUN git clone https://github.com/root-project/root.git $APPS_DIR/root/source --branch=${ROOT_VERSION} && \
     cd $APPS_DIR/root/source && \
-    mkdir -p $APPS_DIR/root/build &&  cd $APPS_DIR/root/build && \
+    mkdir -p $APPS_DIR/root/build && cd $APPS_DIR/root/build && \
     cmake $APPS_DIR/root/source -DCMAKE_INSTALL_PREFIX=$APPS_DIR/root/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD -Dbuiltin_afterimage=ON -Dgnuinstall=ON && \
     make -j$(nproc) install && \
     rm -rf $APPS_DIR/root/build $APPS_DIR/root/source
@@ -55,7 +55,7 @@ RUN echo GARFIELD_VERSION: ${GARFIELD_VERSION}
 
 RUN git clone https://gitlab.cern.ch/garfield/garfieldpp.git $APPS_DIR/garfieldpp/source && \
     cd $APPS_DIR/garfieldpp/source && git reset --hard ${GARFIELD_VERSION} && \
-    mkdir -p $APPS_DIR/garfieldpp/build &&  cd $APPS_DIR/garfieldpp/build && \
+    mkdir -p $APPS_DIR/garfieldpp/build && cd $APPS_DIR/garfieldpp/build && \
     cmake ../source/ -DCMAKE_INSTALL_PREFIX=$APPS_DIR/garfieldpp/install \
     -DWITH_EXAMPLES=OFF -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD && \
     make -j$(nproc) install && \
