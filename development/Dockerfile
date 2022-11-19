@@ -11,7 +11,7 @@ ARG SSH_PUBLIC_KEY=""
 RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get -y install tzdata
 
 RUN apt-get update \
-    && apt-get install -y sudo ssh xauth xorg build-essential gcc g++ gdb clang cmake rsync tar nano x11-apps nodejs screen \
+    && apt-get install -y sudo ssh xauth xorg build-essential gcc g++ gdb clang cmake rsync tar nano x11-apps nodejs screen tmux vim zsh curl \
     && apt-get upgrade -y && apt-get clean
 
 # ROOT
