@@ -19,10 +19,10 @@ RUN apt-get update \
 RUN sed -i "/WebGui.HttpPort:/c\WebGui.HttpPort:            9000" $ROOTSYS/etc/root/system.rootrc
 
 # Jupyter
-RUN pip3 -q install pip --upgrade && \
-    pip3 list --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1 | xargs -n1 pip3 -q install && \
-    pip3 -q install uproot awkward metakernel matplotlib scipy pandas mplhep boost_histogram ipympl \
-    numba jupyterlab black isort autopep8 jupyterlab_code_formatter aquirdturtle_collapsible_headings
+RUN python -m pip -q install pip --upgrade && \
+    python -m pip --disable-pip-version-check list --outdated --format=json | python -c "import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))" && \
+    python -m pip -q install uproot awkward metakernel matplotlib scipy pandas mplhep boost_histogram ipympl \
+    numba jupyterlab black isort autopep8 jupyterlab_code_formatter aquirdturtle_collapsible_headings pre-commit
 
 RUN mkdir -p /root/Notebooks
 RUN echo "alias start-jupyter='cd /root/Notebooks && jupyter lab --allow-root --ip=0.0.0.0 --port=8888 --no-browser'" >> /root/.bashrc
