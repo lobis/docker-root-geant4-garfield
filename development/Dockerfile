@@ -22,7 +22,7 @@ RUN sed -i "/WebGui.HttpPort:/c\WebGui.HttpPort:            9000" $ROOTSYS/etc/r
 RUN python -m pip -q install pip --upgrade && \
     python -m pip --disable-pip-version-check list --outdated --format=json | python -c "import json, sys; print('\n'.join([x['name'] for x in json.load(sys.stdin)]))" && \
     python -m pip -q install uproot awkward metakernel matplotlib scipy pandas mplhep boost_histogram ipympl \
-    numba jupyterlab black isort autopep8 jupyterlab_code_formatter aquirdturtle_collapsible_headings pre-commit
+    numba jupyterlab black isort autopep8 jupyterlab_code_formatter aquirdturtle_collapsible_headings pre-commit tqdm
 
 RUN mkdir -p /root/Notebooks
 RUN echo "alias start-jupyter='cd /root/Notebooks && jupyter lab --allow-root --ip=0.0.0.0 --port=8888 --no-browser'" >> /root/.bashrc
