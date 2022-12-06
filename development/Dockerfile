@@ -47,8 +47,12 @@ RUN chmod 700 /root/.ssh && chmod 600 /root/.ssh/authorized_keys
 
 RUN yes ${PASSWORD} | passwd
 
+# use zsh as default shell
+RUN chsh -s $(which zsh)
+
 # Install my dotfiles
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/lobis/dotfiles/main/install.sh)"
+RUN echo "source /rest/install/thisREST.sh" >> ~/.zshrc
 
 # Add Tini
 ENV TINI_VERSION v0.19.0
