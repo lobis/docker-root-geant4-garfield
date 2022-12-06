@@ -11,7 +11,7 @@ ARG SSH_PUBLIC_KEY=""
 RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get -y install tzdata
 
 RUN apt-get update \
-    && apt-get install -y sudo ssh xauth xorg build-essential gcc g++ gdb clang cmake rsync tar nano x11-apps nodejs screen tmux vim zsh curl \
+    && apt-get install -y sudo ssh xauth xorg build-essential gcc g++ gdb clang cmake rsync tar nano x11-apps nodejs screen tmux vim zsh wget curl \
     && apt-get upgrade -y && apt-get clean
 
 # ROOT
@@ -49,6 +49,9 @@ RUN yes ${PASSWORD} | passwd
 
 # use zsh as default shell
 RUN chsh -s $(which zsh)
+
+# install neovim
+RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb && apt-get install -y ./nvim-linux64.deb && rm ./nvim-linux64.deb
 
 # Install my dotfiles
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/lobis/dotfiles/main/install.sh)"
