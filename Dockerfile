@@ -75,7 +75,7 @@ RUN echo GEANT4_VERSION: ${GEANT4_VERSION}
 RUN git clone https://github.com/Geant4/geant4.git $APPS_DIR/geant4/source --branch=${GEANT4_VERSION} && \
     cd $APPS_DIR/geant4/source && \
     mkdir -p $APPS_DIR/geant4/build && cd $APPS_DIR/geant4/build && \
-    cmake ../source/ -DCMAKE_INSTALL_PREFIX=$APPS_DIR/geant4/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD -DGEANT4_BUILD_CXXSTD=$CMAKE_CXX_STANDARD \
+    cmake ../source/ -DCMAKE_INSTALL_PREFIX=$APPS_DIR/geant4/install -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD \
     -DGEANT4_BUILD_MULTITHREADED=ON -DGEANT4_USE_QT=ON -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACER_X11=ON \
     -DGEANT4_INSTALL_DATA=ON -DGEANT4_USE_GDML=ON && \
     make -j$(nproc) install && \
